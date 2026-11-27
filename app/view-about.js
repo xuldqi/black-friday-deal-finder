@@ -30,10 +30,13 @@ export function renderAbout(app) {
       <li><span class="verdict verdict-inflated">Inflated anchor</span> The struck-through "usual" price is nominal, so the percentage flatters the deal. The sale price itself may still be fine.</li>
     </ul>
     <h2>The deal score</h2>
-    <p>Each deal scores out of 100. Three quarters of the score is the discount percentage; the rest is the
-    verdict (a new low adds 30, a strong price 22, a fair price 10, an inflated anchor 2). That way a modest
-    discount on a genuine new low can outrank a huge discount off a price nobody ever pays. The arithmetic is
-    deliberately simple and shown on every deal page.</p>
+    <p>Each deal scores out of 100 by one fixed formula: score = round(discount % × 0.75 + verdict points),
+    capped at 100, where the verdict points are 30 for a new low, 22 for a strong price, 10 for a fair price
+    and 2 for an inflated anchor. So 40% off with a strong-price verdict scores round(40 × 0.75 + 22) = 52,
+    while 30% off a genuine new low scores round(30 × 0.75 + 30) = 53 — a modest discount on a real low
+    outranks 60% off an inflated anchor, which scores only round(60 × 0.75 + 2) = 47. The score is computed
+    from the deal's two prices every time it is shown, never stored, and every deal page shows its score
+    next to the same explanation in short form.</p>
     <h2>The fine print</h2>
     <p>Prices were true when checked and can change or sell out at any time — the store page is always the
     final word. "Usual price" is the list or comparable-value price shown next to the sale price by the store
