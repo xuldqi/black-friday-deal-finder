@@ -11,6 +11,25 @@ import { applyFilters, emptyState, SORTERS, storeList } from './filters.js';
 
 const categoryName = (key) => (CATEGORIES.find(([k]) => k === key) || [key, key])[1];
 
+// The verdict tally for the hero: how the checked deals split across the
+// four verdicts, counted from the data so it can never drift from the list.
+const VERDICT_PLURALS = {
+  'new-low': 'new lows',
+  strong: 'strong prices',
+  fair: 'fair prices',
+  inflated: 'inflated anchors',
+};
+
+function verdictTally() {
+  return Object.keys(VERDICT_PLURALS)
+    .map((verdict) => {
+      const n = DEALS.filter((deal) => deal.verdict === verdict).length;
+      return n ? `${n} ${VERDICT_PLURALS[verdict]}` : '';
+    })
+    .filter(Boolean)
+    .join(' · ');
+}
+
 export function renderList(app, initialCategory) {
   const state = emptyState();
   if (initialCategory && CATEGORIES.some(([k]) => k === initialCategory)) {
@@ -36,6 +55,7 @@ export function renderList(app, initialCategory) {
     <p class="hero-sub">${DEALS.length} deals found and price-checked on Black Friday morning, each with its store,
     its usual price, when it was checked, where the price was read, and an honest verdict on whether it is really a deal.
     Together they save ${formatMoney(totalSaving)} against list prices.</p>
+    <p class="hero-tally">Our verdicts across the list: ${verdictTally()}. Even the inflated anchor stays on the list on purpose — a flattering percentage is worth seeing labelled.</p>
     <p class="hero-meta">Prices checked on Black Friday morning · Cyber Monday follows on Mon 30 Nov · Prices move fast today — the store page is the final word.</p>
   </section>
   <section class="controls" aria-label="Search and filters">

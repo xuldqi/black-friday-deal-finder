@@ -2,9 +2,9 @@
 // the evidence behind it, the same product's prices at other stores where we
 // checked them, and the source the price was read from, with a link to it.
 
-import { CATEGORIES, CHECKED_AT, DEALS } from './data-deals.js';
-import { categoryIcon, esc } from './card.js';
-import { dealScore, discountPct, formatMoney, savings, verdictLabel } from './deal-math.js';
+import { CATEGORIES, DEALS } from './data-deals.js';
+import { categoryIcon, checkedLabel, esc } from './card.js';
+import { dealScore, discountPct, formatMoney, savings, scoreParts, trimNumber, verdictLabel } from './deal-math.js';
 
 const categoryName = (key) => (CATEGORIES.find(([k]) => k === key) || [key, key])[1];
 
@@ -21,6 +21,7 @@ export function renderDeal(app, id) {
   }
   const pct = discountPct(deal);
   const score = dealScore(deal);
+  const parts = scoreParts(deal);
   const alsoRows = (deal.alsoAt || [])
     .map(
       (other) =>
@@ -52,11 +53,11 @@ export function renderDeal(app, id) {
     </div>
     <h2>Is it really a deal?</h2>
     <p><span class="verdict verdict-${deal.verdict}">${verdictLabel(deal.verdict)}</span>
-    <span class="score-inline">Deal score ${score}/100 — the discount counts for three quarters of the score, the verdict for the rest.</span></p>
+    <span class="score-inline">Deal score ${score}/100, from this deal's own numbers: ${parts.pct}% off &times; 0.75 = ${trimNumber(parts.discountPoints)}, plus ${parts.verdictPoints} points for the ${verdictLabel(deal.verdict).toLowerCase()} verdict, rounded.</span></p>
     <p>${esc(deal.evidence)}</p>
     ${alsoBlock}
     <h2>How this price was checked</h2>
-    <p>Price read on ${CHECKED_AT} from ${esc(deal.sourceName)}.
+    <p>Price read on ${checkedLabel(deal)} from ${esc(deal.sourceName)}.
     Read it yourself: <a href="${deal.sourceUrl}" target="_blank" rel="noopener">${esc(deal.sourceName)}</a>.
     Prices move quickly on Black Friday, so confirm the price on the store page before you pay.</p>
   </article>`;

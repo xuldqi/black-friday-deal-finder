@@ -4,12 +4,29 @@
 
 import { CHECKED_AT, DEALS } from './data-deals.js';
 import { esc } from './card.js';
+import { dealScore, scoreParts, verdictLabel } from './deal-math.js';
 
 export function renderAbout(app) {
   const sources = new Map();
   for (const deal of DEALS) {
     if (!sources.has(deal.sourceUrl)) sources.set(deal.sourceUrl, deal.sourceName);
   }
+  // Two worked examples taken from the list itself, so the arithmetic a
+  // reader checks here is the arithmetic on the deal pages: the
+  // highest-scoring deal, and an inflated anchor whose bigger percentage
+  // scores lower.
+  const topDeal = [...DEALS].sort((a, b) => dealScore(b) - dealScore(a))[0];
+  const topParts = scoreParts(topDeal);
+  const inflatedDeal = DEALS.find((deal) => deal.verdict === 'inflated');
+  const inflatedParts = scoreParts(inflatedDeal);
+  const workedExamples =
+    topDeal && inflatedDeal
+      ? `<p>Worked in full on two deals from the list itself: the ${esc(topDeal.name)} is ${topParts.pct}% off
+    with a ${verdictLabel(topDeal.verdict).toLowerCase()} verdict, so round(${topParts.pct} &times; 0.75 + ${topParts.verdictPoints}) = ${topParts.score}.
+    The ${esc(inflatedDeal.name)} is ${inflatedParts.pct}% off but earns only ${inflatedParts.verdictPoints} verdict points,
+    so round(${inflatedParts.pct} &times; 0.75 + ${inflatedParts.verdictPoints}) = ${inflatedParts.score} — the bigger percentage scores lower,
+    because its anchor price is nominal. Every deal page shows this same working for its own score.</p>`
+      : '';
   const sourceItems = [...sources.entries()]
     .map(([url, name]) => `<li><a href="${url}" target="_blank" rel="noopener">${esc(name)}</a></li>`)
     .join('');
@@ -37,6 +54,7 @@ export function renderAbout(app) {
     outranks 60% off an inflated anchor, which scores only round(60 × 0.75 + 2) = 47. The score is computed
     from the deal's two prices every time it is shown, never stored, and every deal page shows its score
     next to the same explanation in short form.</p>
+    ${workedExamples}
     <h2>The fine print</h2>
     <p>Prices were true when checked and can change or sell out at any time — the store page is always the
     final word. "Usual price" is the list or comparable-value price shown next to the sale price by the store

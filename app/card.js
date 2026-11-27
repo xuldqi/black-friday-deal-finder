@@ -29,6 +29,12 @@ export function esc(text) {
     .replace(/"/g, '&quot;');
 }
 
+// When this deal's price was read: its own checkedAt when it was checked in
+// a later round than the main one, else the shared CHECKED_AT.
+export function checkedLabel(deal) {
+  return deal.checkedAt || CHECKED_AT;
+}
+
 export function dealCard(deal, categoryName) {
   const pct = discountPct(deal);
   const score = dealScore(deal);
@@ -50,7 +56,7 @@ export function dealCard(deal, categoryName) {
       <div class="score-bar"><span style="width:${score}%"></span></div>
       <span class="score-num">${score}/100</span>
     </div>
-    <p class="deal-checked">Price checked ${CHECKED_AT} · Source: ${esc(deal.sourceName)}</p>
+    <p class="deal-checked">Price checked ${checkedLabel(deal)} · Source: ${esc(deal.sourceName)}</p>
     <p class="deal-actions">
       <a class="btn btn-store" href="${deal.url}" target="_blank" rel="noopener">View at ${esc(deal.store)}</a>
       <a class="btn btn-detail" href="#/deal/${deal.id}">Why this verdict</a>

@@ -11,6 +11,11 @@
 // Verdicts: new-low (lowest tracked price), strong (a genuinely good price),
 // fair (a real but ordinary sale price), inflated (the anchor price is
 // nominal, so the percentage flatters the deal).
+//
+// CHECKED_AT is the main checking round. A deal added in a later round the
+// same morning carries its own checkedAt, and the card and the deal page
+// show that instead — the time printed is always the time that deal's price
+// was actually read.
 
 export const CHECKED_AT = 'Fri 27 Nov 2026, 06:45 UTC';
 
@@ -190,6 +195,21 @@ export const DEALS = [
     blurb: 'Apple\u2019s entry laptop with the A18 Pro chip at $599. Modest storage, but the lowest price we found on a current MacBook.',
   },
   {
+    id: 'macbook-air-13-m5',
+    name: 'Apple MacBook Air 13\u2033 Laptop (M5, 16GB RAM, 512GB SSD)',
+    category: 'computers',
+    store: 'Amazon',
+    url: 'https://www.amazon.com/dp/B0GR1JTFP8',
+    price: 1049,
+    usual: 1299,
+    verdict: 'strong',
+    evidence: 'The Mac Observer checked the price, seller and stock on Amazon (23 Nov) and 9to5Mac and 9to5Toys list the same $1,049. Apple raised this configuration from $1,099 to $1,299 in June, so the sale price lands $50 under what it cost before the rise \u2014 and Apple\u2019s own store still charges the full $1,299.',
+    sourceName: 'The Mac Observer deal report and 9to5Mac Black Friday Mac deals (Amazon)',
+    sourceUrl: 'https://www.macobserver.com/deals/m5-macbook-air-13-inch-deal-1049/',
+    checkedAt: 'Fri 27 Nov 2026, 09:10 UTC',
+    blurb: 'The current MacBook Air with the upgrades that matter already in \u2014 16GB of memory, a 512GB SSD \u2014 at $250 under list and below its own pre-June price.',
+  },
+  {
     id: 'dell-15-dc15250',
     name: 'Dell 15.6\u2033 Laptop (Core 3, 8GB RAM, 512GB SSD)',
     category: 'computers',
@@ -245,6 +265,21 @@ export const DEALS = [
     sourceName: 'Redmond Pie, Black Friday 2026 tech deals roundup (Amazon)',
     sourceUrl: 'https://www.redmondpie.com/black-friday-2026-here-are-100-best-deals-in-tech/',
     blurb: 'The color-screen Kindle for comics, cookbooks and highlighted nonfiction, at its lowest price we found.',
+  },
+  {
+    id: 'ipad-a16-128',
+    name: 'Apple iPad 11\u2033 (A16, 128GB, Wi-Fi)',
+    category: 'phones',
+    store: 'Amazon',
+    url: 'https://www.amazon.com/dp/B0DZ7871B8',
+    price: 379,
+    usual: 449,
+    verdict: 'fair',
+    evidence: 'Macworld\u2019s checked price table (26 Nov) has it at $379: $70 off the $449 list price and $20 under its October Prime Day price. The honest catch is the anchor \u2014 Apple raised this iPad\u2019s starting price by $100 in June, from $349, so the discount is measured from a higher list price than last year\u2019s.',
+    sourceName: 'Macworld, best iPad Black Friday deals (prices checked 26 Nov 2026)',
+    sourceUrl: 'https://www.macworld.com/article/1374180/best-ipad-black-friday-deals-2026-nov-25.html',
+    checkedAt: 'Fri 27 Nov 2026, 09:10 UTC',
+    blurb: 'The cheapest current iPad, and plenty for browsing, streaming and schoolwork. A real cut \u2014 just judge it against the $349 it cost before June, not only the $449 struck through.',
   },
   {
     id: 'apple-watch-se-3',
@@ -416,6 +451,26 @@ export const DEALS = [
     sourceUrl: 'https://www.redmondpie.com/black-friday-2026-here-are-100-best-deals-in-tech/',
     unit: '$198 per TB',
     blurb: 'Pocketable, drop-proof, water-resistant storage at $198 per terabyte. The one to throw in a camera bag.',
+  },
+  {
+    id: 'samsung-990-pro-2tb',
+    name: 'Samsung 990 PRO 2TB NVMe Internal SSD (PCIe 4.0)',
+    category: 'storage',
+    store: 'B&H',
+    url: 'https://www.bhphotovideo.com/c/product/1726548-REG/samsung_mz_v9p2t0b_am_2tb_990_pro_pcie.html/overview',
+    price: 384.99,
+    usual: 614.99,
+    verdict: 'strong',
+    evidence: 'Read on B&H\u2019s own product page: $384.99 against a $614.99 list price, in stock, with the $230 difference labelled Black Friday Savings. Best Buy and Newegg both list the same drive at $389.99 this week, so the price is real and matched across stores.',
+    sourceName: 'B&H product page (price read at the store)',
+    sourceUrl: 'https://www.bhphotovideo.com/c/product/1726548-REG/samsung_mz_v9p2t0b_am_2tb_990_pro_pcie.html/overview',
+    alsoAt: [
+      { store: 'Best Buy', price: 389.99 },
+      { store: 'Newegg', price: 389.99 },
+    ],
+    unit: 'about $192 per TB',
+    checkedAt: 'Fri 27 Nov 2026, 09:10 UTC',
+    blurb: 'The flagship Gen 4 internal drive for a PC or PS5 \u2014 7,450MB/s reads \u2014 at about $192 per terabyte, and $5 cheaper at B&H than at Best Buy or Newegg.',
   },
   {
     id: 'wd-elements-20tb',

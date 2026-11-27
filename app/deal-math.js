@@ -27,6 +27,23 @@ export function dealScore(deal) {
   return Math.min(100, Math.round(discountPct(deal) * 0.75 + weight));
 }
 
+// The same score taken apart, so a deal page can show its own arithmetic:
+// the discount's contribution before rounding, the verdict's points, and
+// the total they round to. discountPoints + verdictPoints may differ from
+// the score by the rounding — the score is the rounded sum, as the method
+// page explains.
+export function scoreParts(deal) {
+  const pct = discountPct(deal);
+  const verdictPoints = (VERDICTS[deal.verdict] || VERDICTS.fair).weight;
+  return { pct, discountPoints: pct * 0.75, verdictPoints, score: dealScore(deal) };
+}
+
+// A number for display in the score arithmetic: whole numbers stay whole,
+// fractions keep at most two decimals (14.25, not 14.250000001).
+export function trimNumber(value) {
+  return String(Math.round(value * 100) / 100);
+}
+
 export function formatMoney(value) {
   const rounded = Math.round(value * 100) / 100;
   const text = Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(2);
