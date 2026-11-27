@@ -4,7 +4,7 @@
 // many of the checked deals match, so a filter that shows nothing reads as
 // an empty result rather than a broken page.
 
-import { CATEGORIES, CHECKED_AT, DEALS } from './data-deals.js';
+import { CATEGORIES, DEALS } from './data-deals.js';
 import { dealCard } from './card.js';
 import { formatMoney, savings } from './deal-math.js';
 import { applyFilters, emptyState, SORTERS, storeList } from './filters.js';
@@ -36,7 +36,7 @@ export function renderList(app, initialCategory) {
     <p class="hero-sub">${DEALS.length} deals found and price-checked on Black Friday morning, each with its store,
     its usual price, when it was checked, where the price was read, and an honest verdict on whether it is really a deal.
     Together they save ${formatMoney(totalSaving)} against list prices.</p>
-    <p class="hero-meta">Prices checked ${CHECKED_AT} · Black Friday is Fri 27 Nov 2026, Cyber Monday follows on Mon 30 Nov · Prices move fast today — the store page is the final word.</p>
+    <p class="hero-meta">Prices checked on Black Friday morning · Cyber Monday follows on Mon 30 Nov · Prices move fast today — the store page is the final word.</p>
   </section>
   <section class="controls" aria-label="Search and filters">
     <label class="control control-search">
